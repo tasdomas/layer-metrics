@@ -33,7 +33,7 @@ metrics:
 
 `type: absolute` metrics report the amount added since last time.
 
-### Built-in Metric
+### The juju-units metric
 
 The built-in Juju metric `juju-units` sends a `"1"` value for each Juju unit.
 This is useful for deriving units- or applications- per time-period. To enable
