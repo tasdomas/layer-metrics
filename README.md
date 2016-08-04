@@ -33,18 +33,10 @@ metrics:
 
 `type: absolute` metrics report the amount added since last time.
 
-### Collection commands
-
-`command:` specifies a shell command to execute, which takes a reading of the
-metric. The command must write a single, postive numeric string to stdout.
-This string may be an integer (like `15`) or a decimal (like `3.1415`).
-
-The current working directory for the command is the charm directory.
-
 ### Built-in Metric
 
 The built-in Juju metric `juju-units` sends a `"1"` value for each Juju unit.
-This is useful for deriving units or applications per time period. To enable
+This is useful for deriving units- or applications- per time-period. To enable
 it, simply declare:
 
 ```
@@ -53,6 +45,14 @@ metrics:
 ```
 
 without any attributes.
+
+### Collection commands
+
+`command:` specifies a shell command to execute, which takes a reading of the
+metric. The command must write a single, postive numeric string to stdout.
+This string may be an integer (like `15`) or a decimal (like `3.1415`).
+
+The current working directory for the command is the charm directory.
 
 #### Caveat
 
