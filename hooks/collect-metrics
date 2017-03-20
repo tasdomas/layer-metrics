@@ -16,8 +16,12 @@ def build_command(doc):
         cmd = mdoc.get("command")
         if cmd:
             value = check_output(cmd, shell=True, universal_newlines=True)
-            values[metric] = value.strip()
+            value = value.strip()
+            if value:
+                values[metric] = value
 
+    if not values:
+        return None
     command = ["add-metric"]
     for metric, value in values.items():
         command.append("%s=%s" % (metric, value))
@@ -30,4 +34,5 @@ if __name__ == '__main__':
     with open(metrics_yaml) as f:
         doc = yaml.load(f)
         command = build_command(doc)
-        check_call(command)
+        if command:
+            check_call(command)
