@@ -1,15 +1,12 @@
-#!/usr/bin/env python3
-
-# Load modules from $CHARM_DIR/lib
-import sys
-sys.path.append('lib')
-
 import yaml
 import os
 from subprocess import check_output, check_call, CalledProcessError
 
+from charms.reactive import hook
+from charms.metrics import add_metric
 
-def build_command(doc):
+
+def collect_metrics(doc):
     values = {}
     metrics = doc.get("metrics", {})
     for metric, mdoc in metrics.items():
@@ -27,18 +24,15 @@ def build_command(doc):
                 values[metric] = value
 
     if not values:
-        return None
-    command = ["add-metric"]
-    for metric, value in values.items():
-        command.append("%s=%s" % (metric, value))
-    return command
+        return
+
+    add_metric(values**)
 
 
-if __name__ == '__main__':
+@hook('collect-metrics')
+def collect():
     charm_dir = os.path.dirname(os.path.abspath(os.path.join(__file__, "..")))
     metrics_yaml = os.path.join(charm_dir, "metrics.yaml")
     with open(metrics_yaml) as f:
         doc = yaml.load(f)
-        command = build_command(doc)
-        if command:
-            check_call(command)
+        collect_metrics(doc)
